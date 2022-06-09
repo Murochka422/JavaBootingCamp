@@ -1,0 +1,40 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>academy.kovalevsyi.codingbootcamp</groupId>
+  <artifactId>app</artifactId>
+  <version>1.0</version>
+
+  <properties>
+    <javaVersion>17</javaVersion>
+    <maven.compiler.target>${javaVersion}</maven.compiler.target>
+    <maven.compiler.source>${javaVersion}</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <myMain>academy.kovalevskyi.codingbootcamp.week0.day2.Main</myMain>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>${myMain}</mainClass>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+          <archive>
+            <manifest>         
+               <mainClass>${myMain}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
