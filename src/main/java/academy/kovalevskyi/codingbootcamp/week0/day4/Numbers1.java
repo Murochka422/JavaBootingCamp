@@ -47,10 +47,7 @@ public class Numbers1 {
   }
 
   public static boolean isNegative(int number) {
-    if (number < 0) {
-      return true;
-    }
-    return false;
+    return number < 0;
   }
 
   public static char[] convertToCharArray(int number) {
