@@ -149,19 +149,13 @@ public class StringUtils {
         throw new NumberFormatException("Not valid number format");
       }
     }
-    int k = 0;
-    if (isAsciiMinus(input[0])) {
-      k++;
-    }    
+    int k = isAsciiMinus(input[0]) ? 1 : 0;
     int number = 0;
     for (int i = k; i < input.length - 1; i++) {
       number += (int) input[i] - 48;
       number *= 10;
     } 
     number += (int) input[input.length - 1] - 48;
-    if (isAsciiMinus(input[0])) {
-      number *= -1;
-    }    
-    return number;
+    return isAsciiMinus(input[0]) ? (number *= -1) : number;
   }
 }
