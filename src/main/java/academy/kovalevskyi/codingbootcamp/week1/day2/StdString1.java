@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 
 public class StdString1  implements Iterable<Character> {
-  private char[] str;
+  protected char[] str;
 
   public StdString1(char[] base) {
     str = new char[base.length];
@@ -24,7 +24,6 @@ public class StdString1  implements Iterable<Character> {
   public StdString1(StdString1 stdString1) {
     str = new char[stdString1.length()];
     copyOf(stdString1.toCharArray());
-    
   }
 
   private boolean equalStdStrings(StdString1 that) {
@@ -39,13 +38,13 @@ public class StdString1  implements Iterable<Character> {
     return true;
   }
 
-  private void copyOf(char[] base) {
+  protected void copyOf(char[] base) {
     for (int i = 0; i < base.length; i++) {
       str[i] = base[i];
     }
   }
 
-  private void copyOf(char[] base, int point) {
+  protected void copyOf(char[] base, int point) {
     for (int i = point; i < (point + base.length); i++) {
       str[i] = base[i - point];
     }
