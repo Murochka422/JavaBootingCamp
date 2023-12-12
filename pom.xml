@@ -9,9 +9,15 @@
     <maven.compiler.target>${javaVersion}</maven.compiler.target>
     <maven.compiler.source>${javaVersion}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <myMain>academy.kovalevskyi.codingbootcamp.week0.day2.Main</myMain>
+    <myMain>academy.kovalevskyi.codingbootcamp.week2.day2.Main</myMain>
   </properties>
-
+  <dependencies>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>4.6.3</version>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>

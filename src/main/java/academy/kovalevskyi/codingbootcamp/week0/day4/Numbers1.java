@@ -2,15 +2,12 @@ package academy.kovalevskyi.codingbootcamp.week0.day4;
 
 public class Numbers1 {
 
-  public static void main(String[] args) {
-    System.out.println("-2147483648     " + numberLength(-2147483648));
-    numbOut(convertToCharArray(-2147483648));
-    
-    
+  public static int[] generateNumbers() {
+    return generateAnyNumbers(100);
   }
 
-  public static int[] generateNumbers() {
-    int[] numbers = new int[100];
+  private static int[] generateAnyNumbers(int amount) {
+    int[] numbers = new int[amount];
     for (int i = 0; i < numbers.length; i++) {
       numbers[i] = i;
     }
@@ -18,10 +15,7 @@ public class Numbers1 {
   }
 
   public static int findBiggest(int left, int right) {
-    if (left >= right) {
-      return left;
-    }
-    return right;
+    return (left >= right) ? left : right;
   }
 
   public static int findBiggest(int left, int mid, int right) {
@@ -29,21 +23,19 @@ public class Numbers1 {
   }
 
   public static int findBiggest(int[] numbers) {
-    int max = numbers[0];
-    for (int i = 1; i < numbers.length; i++) {
-      max = findBiggest(max, numbers[i]);
-    }
-    return max;
+    return numbers[findIndexOfBiggestNumber(numbers)];
   }
 
   public static int findIndexOfBiggestNumber(int[] numbers) {
-    int max = findBiggest(numbers);
+    int max = numbers[0];
+    int index = 0;
     for (int i = 0; i < numbers.length; i++) {
-      if (max == numbers[i]) {
-        return i;
+      if (numbers[i] > max) {
+        max = numbers[i];
+        index = i;
       }
     }
-    return 0;
+    return index;
   }
 
   public static boolean isNegative(int number) {
@@ -53,56 +45,31 @@ public class Numbers1 {
   public static char[] convertToCharArray(int number) {
     char[] characters = new char[numberLength(number)];
     int numb = number;
+    int k = 1;
     if (isNegative(number)) {
       characters[0] = '-';
-      numb = numberAbs(number); 
+      characters[characters.length - 1] = (char) (48 - (numb % 10));
+      numb /= -10;
+      k++;
     }
-    int i = characters.length - 1;
+    int i = characters.length - k;
     while (numb >= 10) {
       characters[i] = (char) (48 + (numb % 10));
       numb /= 10;
       i--;
     }
-    characters[i] = (char) (48 + numb);
-    if (isMin(number)) {
-      characters[characters.length - 1] = (char) ((int) (characters[characters.length - 1] + 1));
-    }
+    characters[i] = (numb >= 1) || (number == 0) ? (char) (48 + numb) : characters[i];
     return characters;
   }
 
-  public static void convertToArray(int number) {
-    int[] numbers = new int[numberLength(number)];
-    int numb = number;
-    if (isNegative(numb)) {
-      numb = numberAbs(number); 
-    }
-    int i = numbers.length - 1;
-    while (numb >= 10) {
-      numbers[i] = numb % 10;
-      numb /= 10;
-      i--;
-    } 
-    numbers[i] = numb;
-    if (isMin(number)) {
-      numbers[numbers.length - 1] += 1;
-    }
-    for (i = 0; i < numbers.length; i++) {
-      System.out.println(numbers[i]);
-    }
-  }
-
-  public static void numbOut(char[] characters) {
-    for (int i = 0; i < characters.length; i++) {
-      System.out.println(characters[i]);
-    }
-  } 
-
-  public static int numberLength(int number) {
+  static int numberLength(int number) {
     int length = 1;
     int numb = number;
     if (isNegative(number)) {
       length++;
-      numb = numberAbs(number); 
+      if ((numb /= -10) >= 1) {
+        length++;
+      }
     }
     while (numb >= 10) {
       length++;
@@ -112,16 +79,6 @@ public class Numbers1 {
   }
 
   public static int numberAbs(int number) {
-    if (isNegative(number) & isMin(number)) {
-      return 0 - number - 1; 
-    }
-    if (isNegative(number)) {
-      return 0 - number; 
-    }
-    return number;
-  }
-
-  public static boolean isMin(int number) {
-    return (number == Integer.MIN_VALUE);
+    return isNegative(number) ? number * -1 : number;
   }
 }

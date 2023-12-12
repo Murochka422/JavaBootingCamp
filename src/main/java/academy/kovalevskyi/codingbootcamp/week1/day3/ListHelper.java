@@ -2,55 +2,80 @@ package academy.kovalevskyi.codingbootcamp.week1.day3;
 
 import java.util.function.Function;
 
-public class ListHelper<T> {
+public class ListHelper {
 
-  public static <T> int length(ListNode<T> someNode) throws NullPointerException {
+  public static <T> boolean contains(ListNode<T> someNode, T value) {
+    ListNode<T> step = someNode;
+    while (hasPrev(step)) {
+      if (step.getValue() == value) {
+        return true;
+      }
+      step = step.getPrev();
+    }
+    if (step.getValue() == value) {
+      return true;
+    }
+
+    step = someNode;
+    while (hasNext(step)) {
+      if (step.getValue() == value) {
+        return true;
+      }
+      step = step.getNext();
+    }
+    return (step.getValue() == value) ? true : false;
+  }
+
+  public static <T> int length(ListNode<T> someNode) {
     if (someNode == null) {
       throw new NullPointerException("Node is null");
     }
-    ListNodeHt ht = new ListNodeHt(someNode);
-    return ht.length();
-  } 
+    int length = 1;
+    ListNode<T> step = someNode;
+    while (hasNext(step)) {
+      length++;
+      step = step.getNext();
+    }
+    step = someNode;
+    while (hasPrev(step)) {
+      length++;
+      step = step.getPrev();
+    }
+    return length;
+  }
 
   public static <T> ListNode<T> addToEnd(ListNode<T> someNode, T newValue) {
-    ListNodeHt ht = new ListNodeHt(someNode);
-    ht.setTail(new ListNode(ht.getTail(), null, newValue));
-    return ht.getTail();
+    ListNode<T> tail = setTail(someNode);
+    tail = setTail(new ListNode<>(tail, null, newValue));
+    return tail;
   }
 
   public static <T> ListNode<T> addToStart(ListNode<T> someNode, T newValue) {
-    ListNodeHt ht = new ListNodeHt(someNode);
-    ht.setHead(new ListNode(null, ht.getHead(), newValue));
-    return ht.getHead();
+    ListNode<T> head = setHead(someNode);
+    head = setHead(new ListNode<>(null, head, newValue));
+    return head;
   }
 
-  public static <T> boolean contains(ListNode<T> someNode, T value) {
-    ListNodeHt ht = new ListNodeHt(someNode);
-    return ht.contains(value);
-  }
-
-  public static <T, R> ListNode<R> map(ListNode<T> someNode, Function<T, R> mapFunction)
-                                   throws NullPointerException {
-    ListNodeHt ht = new ListNodeHt(someNode);
+  public static <T, R> ListNode<R> map(ListNode<T> someNode, Function<T, R> mapFunction) {
     if (someNode == null) {
       throw new NullPointerException("Node is null");
     }
-    ListNode<T> step = ht.getHead();
-    ListNode<T> node = new ListNode(null, null, mapFunction.apply(step.getValue()));
-    while (step.hasNext()) {
+    ListNode<T> step = setHead(someNode);
+    ListNode<R> node = new ListNode<>(null, null, mapFunction.apply(step.getValue()));
+    while (hasNext(step)) {
       step = step.getNext();
-      node = addToEnd(node, (T) mapFunction.apply(step.getValue()));
+      node = addToEnd(node, mapFunction.apply(step.getValue()));
     }
-    return (ListNode<R>) node;
+    return node;
   }  
 
   public static <T> ListNode<T> insertAfter(ListNode<T> prev, T newValue) {
-    return new ListNode(prev, prev.getNext(), newValue);  
+    return new ListNode<>(prev, prev.getNext(), newValue);
   }
 
   public static <T> void insertAfter(ListNode<T> prev, T[] newValues) {
     if (newValues.length > 0) {
-      ListNode node = insertAfter(prev, newValues[0]);
+      ListNode<T> node = insertAfter(prev, newValues[0]);
       for (int i = 1; i < newValues.length; i++) {
         node = insertAfter(node, newValues[i]);
       }
@@ -58,14 +83,38 @@ public class ListHelper<T> {
   }
 
   public static <T> T delete(ListNode<T> current) {
-    if (current.hasPrev()) {
+    if (hasPrev(current)) {
       current.getPrev().setNext(current.getNext());
       current.setPrev(null);
     }
-    if (current.hasNext()) {
+    if (hasNext(current)) {
       current.getNext().setPrev(current.getPrev());
       current.setNext(null);
     }
     return current.getValue();
+  }
+
+  private static <T> boolean hasPrev(ListNode<T> node) {
+    return node.getPrev() != null;
+  }
+
+  private static <T> boolean hasNext(ListNode<T> node) {
+    return node.getNext() != null;
+  }
+
+  private static <T> ListNode<T> setHead(ListNode<T> node) {
+    ListNode<T> head = node;
+    while (hasPrev(head)) {
+      head = head.getPrev();
+    }
+    return head;
+  }
+
+  private static <T> ListNode<T> setTail(ListNode<T> node) {
+    ListNode<T> tail = node;
+    while (hasNext(tail)) {
+      tail = tail.getNext();
+    }
+    return tail;
   }
 }

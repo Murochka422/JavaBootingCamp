@@ -1,9 +1,7 @@
 package academy.kovalevskyi.codingbootcamp.week1.day2;
 
-import java.util.stream.IntStream;
-
 public class StringUtils {
- 
+
   public static boolean isAsciiChar(char ch) throws IllegalArgumentException {
     if ((ch < 0) || (ch > 255)) {
       throw new IllegalArgumentException("Not valid argument");
@@ -12,48 +10,23 @@ public class StringUtils {
   }
 
   public static boolean isAsciiUppercase(char ch) throws IllegalArgumentException {
-    if (isAsciiChar(ch)) {
-      if ((ch >= 'A') && (ch <= 'Z')) {
-        return true;
-      } 
-    }
-    return false;
+    return (isAsciiChar(ch)) && (ch >= 'A') && (ch <= 'Z');
   }
 
   public static boolean isAsciiLowercase(char ch) throws IllegalArgumentException {
-    if (isAsciiChar(ch)) {
-      if ((ch >= 'a') && (ch <= 'z')) {
-        return true;
-      } 
-    }
-    return false;
+    return (isAsciiChar(ch)) && (ch >= 'a') && (ch <= 'z');
   }
 
   public static boolean isAsciiNumeric(char ch) throws IllegalArgumentException {
-    if (isAsciiChar(ch)) {
-      if ((ch >= '0') && (ch <= '9')) {
-        return true;
-      } 
-    }
-    return false;
+    return (isAsciiChar(ch)) && (ch >= '0') && (ch <= '9');
   }
 
   public static boolean isAsciiSpace(char ch) throws IllegalArgumentException {
-    if (isAsciiChar(ch)) {
-      if (ch <= ' ') {
-        return true;
-      } 
-    }
-    return false;
+    return (isAsciiChar(ch)) && (ch <= ' ');
   }
 
   public static boolean isAsciiMinus(char ch) throws IllegalArgumentException {
-    if (isAsciiChar(ch)) {
-      if (ch <= '-') {
-        return true;
-      } 
-    }
-    return false;
+    return isAsciiChar(ch) && (ch == '-');
   }
 
   public static boolean isAsciiAlphabetic(char ch) throws IllegalArgumentException {
@@ -62,8 +35,8 @@ public class StringUtils {
 
   public static boolean isStringAlphaNumerical(char[] input) throws IllegalArgumentException {
     for (int i = 0; i < input.length; i++) {
-      if ((!isAsciiAlphabetic(input[i])) && (!isAsciiNumeric(input[i])) 
-                                         && (!isAsciiSpace(input[i]))) {
+      if ((!isAsciiAlphabetic(input[i])) && (!isAsciiNumeric(input[i]))
+          && (!isAsciiSpace(input[i]))) {
         return false;
       }
     }
@@ -71,17 +44,11 @@ public class StringUtils {
   }
 
   public static char toAsciiUppercase(char ch) throws IllegalArgumentException {
-    if (isAsciiLowercase(ch)) {
-      return (char) ((int) ch - 32); 
-    }
-    return ch;
+    return isAsciiLowercase(ch) ? (char) ((int) ch - 32) : ch;
   }
 
   public static char toAsciiLowercase(char ch) throws IllegalArgumentException {
-    if (isAsciiUppercase(ch)) {
-      return (char) ((int) ch + 32); 
-    }
-    return ch;
+    return isAsciiUppercase(ch) ? (char) ((int) ch + 32) : ch;
   }
 
   public static StringBuilder makeUppercase(char[] input) throws IllegalArgumentException {
@@ -108,12 +75,12 @@ public class StringUtils {
     }
     if (input.length % 2 != 0) {
       str.append(toAsciiLowercase(input[input.length - 1]));
-    } 
+    }
     return str;
   }
 
   public static char[] concatStrings(char[]... input) throws IllegalArgumentException {
-    int l = 0;
+    int l = 0;   //find a length of new string
     for (int i = 0; i < input.length; i++) {
       for (int j = 0; j < input[i].length; j++) {
         if (isAsciiChar(input[i][j])) {
@@ -123,18 +90,16 @@ public class StringUtils {
       l += input[i].length;
     }
     char[] str = new char[l];
-    l = 0;
+    l = 0;    //numeration of new string
     for (int i = 0; i < input.length; i++) {
-      for (int j = 0; j < input[i].length; j++) {
+      for (int j = 0; j < input[i].length; j++, l++) {
         str[l] = input[i][j];
-        l++;
       }
     }
     return str;
   }
 
-  public static int toInt(char[] input) throws IllegalArgumentException, NumberFormatException,
-                                               NullPointerException {
+  public static int toInt(char[] input) throws IllegalArgumentException, NullPointerException {
     if (input == null) {
       throw new NullPointerException("Array is null");
     }
@@ -149,13 +114,14 @@ public class StringUtils {
         throw new NumberFormatException("Not valid number format");
       }
     }
-    int k = isAsciiMinus(input[0]) ? 1 : 0;
+    boolean negative = isAsciiMinus(input[0]);
+    int k = negative ? 1 : 0;
     int number = 0;
     for (int i = k; i < input.length - 1; i++) {
       number += (int) input[i] - 48;
       number *= 10;
-    } 
+    }
     number += (int) input[input.length - 1] - 48;
-    return isAsciiMinus(input[0]) ? (number *= -1) : number;
+    return negative ? (number *= -1) : number;
   }
 }

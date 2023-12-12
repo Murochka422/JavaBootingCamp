@@ -1,8 +1,8 @@
 package academy.kovalevskyi.codingbootcamp.week1.day3;
 
 public class ListNode<T> {
-  private ListNode prev;
-  private ListNode next;
+  private ListNode<T> prev;
+  private ListNode<T> next;
   T value;
 
   public ListNode(ListNode<T> prev, ListNode<T> next, T value) {
@@ -11,24 +11,16 @@ public class ListNode<T> {
     this.value = value;
   }
 
-  public boolean hasPrev() {
-    return prev != null;
-  }
-
-  public boolean hasNext() {
-    return next != null;
-  }
-
   public void setPrev(ListNode<T> prev) {
     this.prev = prev;
-    if (hasPrev()) {
+    if (prev != null) {
       prev.next = this;
     }
   }
 
   public void setNext(ListNode<T> next) {
     this.next = next;
-    if (hasNext()) {
+    if (next != null) {
       next.prev = this;
     }
   }
@@ -47,8 +39,8 @@ public class ListNode<T> {
 
   @Override
   public String toString() {
-    return String.format("Node{prevValue=%s, nextValue=%s, thisValue=%s}", 
-                          hasPrev() ? prev.getValue() : null, 
-                          hasNext() ? next.getValue() : null, getValue());
+    return String.format("Node{prevValue=%s, nextValue=%s, thisValue=%s}",
+        prev == null ? null : prev.value, next == null ? null : next.value, value
+    );
   }
 }

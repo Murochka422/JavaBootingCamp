@@ -13,7 +13,7 @@ public class StdString1  implements Iterable<Character> {
     copyOf(base);
   }
 
-  public StdString1() {
+  public StdString1()  {
     str = new char[0];
   }
 

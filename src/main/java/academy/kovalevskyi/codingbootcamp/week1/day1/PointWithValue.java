@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 public class PointWithValue<T> extends Point {
   
-  private  T value;
+  private T value;
 
   public PointWithValue(final int coordinateX, final int coordinateY, final T value) {
     super(coordinateX, coordinateY);
@@ -16,7 +16,7 @@ public class PointWithValue<T> extends Point {
     return value;
   }
 
-  public <R> PointWithValue<R> mapPoint(Function<T, R> mapFunction) {
+  public <R> PointWithValue mapPoint(Function<T, R> mapFunction) {
     return new PointWithValue(getX(), getY(), mapFunction.apply(this.value));
   }
   

@@ -1,7 +1,5 @@
 package academy.kovalevskyi.codingbootcamp.week1.day0;
 
-import java.util.Objects;
-
 public class Point implements Comparable<Point> {
 
   int coordinateX;

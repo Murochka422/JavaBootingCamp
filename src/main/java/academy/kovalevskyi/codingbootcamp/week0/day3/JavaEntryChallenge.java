@@ -47,10 +47,7 @@ public class JavaEntryChallenge {
   }
 
   public static boolean divisibleBy5(int num) {
-    if ((num % 5) > 0) {
-      return false;
-    }
-    return true;
+    return (num % 5) == 0;
   }
 
   public static int firstElementOfArray(int[] arr) {

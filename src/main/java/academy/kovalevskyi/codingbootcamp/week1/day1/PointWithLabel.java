@@ -1,8 +1,6 @@
 package academy.kovalevskyi.codingbootcamp.week1.day1;
 
 import academy.kovalevskyi.codingbootcamp.week1.day0.Point;
-import java.util.Comparator;
-import java.util.function.Function;
 
 public class PointWithLabel extends PointWithValue<String> {
   
